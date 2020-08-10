@@ -17,7 +17,7 @@ pub struct ReadGuard<'rh, T: ?Sized> {
 }
 
 impl<'rh, T: ?Sized> ReadGuard<'rh, T> {
-    pub(super) fn map_ref<F, U: ?Sized>(self, f: F) -> ReadGuard<'rh, U>
+    pub fn map_ref<F, U: ?Sized>(self, f: F) -> ReadGuard<'rh, U>
     where
         F: for<'a> FnOnce(&'a T) -> &'a U,
     {
@@ -30,7 +30,7 @@ impl<'rh, T: ?Sized> ReadGuard<'rh, T> {
         rg
     }
 
-    pub(super) fn map_opt<F, U: ?Sized>(self, f: F) -> Option<ReadGuard<'rh, U>>
+    pub fn map_opt<F, U: ?Sized>(self, f: F) -> Option<ReadGuard<'rh, U>>
     where
         F: for<'a> FnOnce(&'a T) -> Option<&'a U>,
     {
