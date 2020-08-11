@@ -2,13 +2,14 @@ use std::borrow::Borrow;
 use std::fmt;
 use std::hash::{BuildHasher, Hash};
 use std::mem::ManuallyDrop;
+use std::collections::hash_map::RandomState;
 
 /// This value determines when a value-set is promoted from a list to a HashBag.
 const BAG_THRESHOLD: usize = 32;
 
 /// A bag of values for a given key in the evmap.
 #[repr(transparent)]
-pub struct Values<T, S = std::collections::hash_map::RandomState>(ValuesInner<T, S>);
+pub struct Values<T, S = RandomState>(ValuesInner<T, S>);
 
 impl<T, S> Default for Values<T, S> {
     fn default() -> Self {
@@ -116,7 +117,7 @@ impl<'a, T, S> IntoIterator for &'a Values<T, S> {
 }
 
 #[derive(Debug)]
-pub enum ValuesIter<'a, T, S> {
+pub enum ValuesIter<'a, T, S = RandomState> {
     #[doc(hidden)]
     Short(<&'a smallvec::SmallVec<[T; 1]> as IntoIterator>::IntoIter),
     #[doc(hidden)]
