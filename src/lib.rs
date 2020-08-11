@@ -246,7 +246,7 @@ mod inner;
 use crate::inner::Inner;
 
 mod values;
-pub use values::Values;
+pub use values::{Values, ValuesIter};
 
 pub(crate) type Epochs = Arc<Mutex<slab::Slab<Arc<atomic::AtomicUsize>>>>;
 
